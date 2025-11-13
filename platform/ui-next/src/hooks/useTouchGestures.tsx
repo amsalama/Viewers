@@ -56,7 +56,7 @@ export function useTouchGestures(
 
     const handleTouchStart = (e: TouchEvent) => {
       const state = touchStateRef.current;
-      const touches = Array.from(e.touches);
+      const touches = [...e.touches];
       state.touches = touches;
       state.startTime = Date.now();
 
@@ -102,7 +102,7 @@ export function useTouchGestures(
 
     const handleTouchMove = (e: TouchEvent) => {
       const state = touchStateRef.current;
-      const touches = Array.from(e.touches);
+      const touches = [...e.touches];
 
       if (touches.length === 2 && state.initialDistance > 0) {
         // Pinch gesture
@@ -131,7 +131,7 @@ export function useTouchGestures(
 
     const handleTouchEnd = (e: TouchEvent) => {
       const state = touchStateRef.current;
-      const touches = Array.from(e.changedTouches);
+      const touches = [...e.changedTouches];
 
       if (touches.length === 1 && state.touches.length === 1) {
         // Check for swipe gesture
