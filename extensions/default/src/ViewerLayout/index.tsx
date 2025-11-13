@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
-import { InvestigationalUseDialog } from '@ohif/ui-next';
+import { InvestigationalUseDialog, useResponsive } from '@ohif/ui-next';
 import { HangingProtocolService, CommandsManager } from '@ohif/core';
 import { useAppConfig } from '@state';
 import ViewerHeader from './ViewerHeader';
@@ -30,6 +30,8 @@ function ViewerLayout({
   rightPanelMinimumExpandedWidth,
 }: withAppTypes): React.FunctionComponent {
   const [appConfig] = useAppConfig();
+  const { isMobile, isTablet, width: screenWidth } = useResponsive();
+  const isSmallScreen = isMobile || isTablet;
 
   const { panelService, hangingProtocolService, customizationService } = servicesManager.services;
   const [showLoadingIndicator, setShowLoadingIndicator] = useState(appConfig.showLoadingIndicator);
@@ -41,8 +43,10 @@ function ViewerLayout({
 
   const [hasRightPanels, setHasRightPanels] = useState(hasPanels('right'));
   const [hasLeftPanels, setHasLeftPanels] = useState(hasPanels('left'));
-  const [leftPanelClosedState, setLeftPanelClosed] = useState(leftPanelClosed);
-  const [rightPanelClosedState, setRightPanelClosed] = useState(rightPanelClosed);
+
+  // Auto-collapse panels on mobile/tablet for better viewport space
+  const [leftPanelClosedState, setLeftPanelClosed] = useState(isSmallScreen ? true : leftPanelClosed);
+  const [rightPanelClosedState, setRightPanelClosed] = useState(isSmallScreen ? true : rightPanelClosed);
 
   const [
     leftPanelProps,
@@ -87,6 +91,14 @@ function ViewerLayout({
       document.body.classList.remove('overflow-hidden');
     };
   }, []);
+
+  // Auto-collapse panels on mobile/tablet for better UX
+  useEffect(() => {
+    if (isSmallScreen) {
+      setLeftPanelClosed(true);
+      setRightPanelClosed(true);
+    }
+  }, [isSmallScreen]);
 
   const getComponent = id => {
     const entry = extensionManager.getModuleEntry(id);
@@ -159,7 +171,7 @@ function ViewerLayout({
       />
       <div
         className="relative flex w-full flex-row flex-nowrap items-stretch overflow-hidden bg-black"
-        style={{ height: 'calc(100vh - 52px' }}
+        style={{ height: 'calc(100vh - 48px)' }}
       >
         <React.Fragment>
           {showLoadingIndicator && <LoadingIndicatorProgress className="h-full w-full bg-black" />}

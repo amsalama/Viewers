@@ -55,3 +55,6 @@
 .invisible-scrollbar::-webkit-scrollbar-thumb:window-inactive {
   @apply hidden;
 }
+
+/* Import responsive styles for mobile and tablet */
+@import './responsive.css';

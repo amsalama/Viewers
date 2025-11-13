@@ -1,4 +1,58 @@
 body {
   overscroll-behavior: none;
-  touch-action: none;
+  /* Allow pinch-zoom and pan on mobile/tablet */
+  touch-action: pan-x pan-y pinch-zoom;
+}
+
+/* Responsive viewport adjustments */
+@media (max-width: 640px) {
+  /* Mobile-specific styles */
+  body {
+    font-size: 14px;
+  }
+
+  /* Optimize for mobile touch targets (minimum 44x44px) */
+  button,
+  [role="button"],
+  a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  /* Tablet-specific styles */
+  body {
+    font-size: 15px;
+  }
+}
+
+/* Improve scrolling on mobile */
+@media (max-width: 1023px) {
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Prevent text selection during touch interactions */
+  .viewport-element,
+  [data-viewport] {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* Orientation-specific styles */
+@media (orientation: portrait) and (max-width: 640px) {
+  /* Portrait mobile optimizations */
+  .viewer-layout {
+    flex-direction: column;
+  }
+}
+
+@media (orientation: landscape) and (max-width: 1023px) {
+  /* Landscape tablet/mobile optimizations */
+  .header {
+    height: 40px;
+  }
 }

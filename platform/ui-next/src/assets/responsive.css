@@ -1,0 +1,237 @@
+/* Responsive Viewer Styles for Mobile and Tablet */
+
+/* Mobile-first responsive adjustments */
+@media (max-width: 640px) {
+  /* Adjust toolbar and icon sizes for mobile */
+  .toolbar-button,
+  .tool-button {
+    padding: 8px;
+    font-size: 12px;
+  }
+
+  /* Side panel adjustments */
+  .side-panel {
+    max-width: 90vw;
+  }
+
+  .side-panel-tab {
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  /* Viewport grid adjustments */
+  .viewport-grid {
+    gap: 2px;
+  }
+
+  .viewport-pane {
+    min-height: 200px;
+  }
+
+  /* Overlay adjustments */
+  .viewport-overlay {
+    font-size: 11px;
+    padding: 4px;
+  }
+
+  /* Study browser adjustments */
+  .study-browser {
+    max-height: 40vh;
+  }
+
+  .study-item {
+    padding: 8px;
+  }
+
+  /* Measurement labels */
+  .measurement-label {
+    font-size: 10px;
+  }
+
+  /* Modal dialogs */
+  .modal-dialog {
+    width: 95vw;
+    max-width: 95vw;
+    margin: 8px;
+  }
+}
+
+/* Tablet adjustments (640px - 1023px) */
+@media (min-width: 640px) and (max-width: 1023px) {
+  /* Toolbar adjustments */
+  .toolbar-button,
+  .tool-button {
+    padding: 10px;
+    font-size: 13px;
+  }
+
+  /* Side panel adjustments */
+  .side-panel {
+    max-width: 320px;
+  }
+
+  .side-panel-tab {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  /* Viewport grid adjustments */
+  .viewport-grid {
+    gap: 4px;
+  }
+
+  .viewport-pane {
+    min-height: 300px;
+  }
+
+  /* Study browser adjustments */
+  .study-browser {
+    max-height: 50vh;
+  }
+
+  .study-item {
+    padding: 10px;
+  }
+
+  /* Modal dialogs */
+  .modal-dialog {
+    width: 90vw;
+    max-width: 700px;
+  }
+}
+
+/* Touch-friendly adjustments for all small screens */
+@media (max-width: 1023px) {
+  /* Increase touch target sizes */
+  button,
+  [role="button"],
+  .clickable {
+    min-height: 44px;
+    padding: 8px 12px;
+  }
+
+  /* Increase spacing for better touch accuracy */
+  .tool-group {
+    gap: 8px;
+  }
+
+  /* Scrollbar adjustments for mobile */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+  }
+
+  /* Hide resize handles on touch devices */
+  .resize-handle {
+    display: none;
+  }
+
+  /* Full-width dropdown menus */
+  .dropdown-menu {
+    min-width: 200px;
+  }
+
+  /* Adjust spacing in lists */
+  .list-item {
+    padding: 12px 8px;
+  }
+}
+
+/* Portrait orientation specific */
+@media (orientation: portrait) and (max-width: 640px) {
+  /* Stack layout vertically */
+  .horizontal-layout {
+    flex-direction: column;
+  }
+
+  /* Full-width panels */
+  .side-panel {
+    width: 100vw;
+    max-width: 100vw;
+  }
+
+  /* Adjust viewport aspect ratio */
+  .viewport-container {
+    min-height: 50vh;
+  }
+}
+
+/* Landscape orientation specific */
+@media (orientation: landscape) and (max-height: 600px) {
+  /* Compact header for landscape mobile */
+  .header {
+    height: 40px;
+    padding: 4px 8px;
+  }
+
+  /* Compact toolbars */
+  .toolbar {
+    padding: 4px;
+  }
+
+  .toolbar-button {
+    padding: 6px;
+  }
+
+  /* Maximize viewport space */
+  .viewport-container {
+    height: calc(100vh - 40px);
+  }
+}
+
+/* High DPI (Retina) displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  /* Sharper icons and text */
+  .icon,
+  svg {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Larger tablets and small laptops */
+@media (min-width: 1024px) and (max-width: 1280px) {
+  .side-panel {
+    max-width: 350px;
+  }
+
+  .viewport-grid {
+    gap: 6px;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  /* Remove hover effects on touch devices */
+  .hover-only {
+    display: none;
+  }
+
+  /* Show touch-specific controls */
+  .touch-only {
+    display: block;
+  }
+
+  /* Larger hit areas for touch */
+  .interactive-element {
+    padding: 12px;
+  }
+}
+
+/* Mouse/trackpad device optimizations */
+@media (hover: hover) and (pointer: fine) {
+  /* Hide touch-specific controls */
+  .touch-only {
+    display: none;
+  }
+
+  /* Show hover effects */
+  .hover-only {
+    display: block;
+  }
+}

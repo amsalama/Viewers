@@ -10,6 +10,7 @@ import {
   ToolButton,
 } from '../';
 import { IconPresentationProvider } from '@ohif/ui-next';
+import { useResponsive } from '../../hooks';
 
 import NavBar from '../NavBar';
 
@@ -45,6 +46,9 @@ function Header({
   Secondary,
   ...props
 }: HeaderProps): ReactNode {
+  const { isMobile, isTablet } = useResponsive();
+  const isSmallScreen = isMobile || isTablet;
+
   const onClickReturn = () => {
     if (isReturnEnabled && onClickReturnButton) {
       onClickReturnButton();
@@ -61,6 +65,7 @@ function Header({
         {...props}
       >
         <div className="relative h-[48px] items-center">
+          {/* Left section - Logo and return button */}
           <div className="absolute left-0 top-1/2 flex -translate-y-1/2 items-center">
             <div
               className={classNames(
@@ -70,21 +75,51 @@ function Header({
               onClick={onClickReturn}
               data-cy="return-to-work-list"
             >
-              {isReturnEnabled && <Icons.ArrowLeft className="text-primary ml-1 h-7 w-7" />}
-              <div className="ml-1">
+              {isReturnEnabled && !isSmallScreen && (
+                <Icons.ArrowLeft className="text-primary ml-1 h-7 w-7" />
+              )}
+              <div className={classNames('ml-1', isSmallScreen && 'scale-75')}>
                 {WhiteLabeling?.createLogoComponentFn?.(React, props) || <Icons.OHIFLogo />}
               </div>
             </div>
           </div>
-          <div className="absolute top-1/2 left-[250px] h-8 -translate-y-1/2">{Secondary}</div>
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
-            <div className="flex items-center justify-center space-x-2">{children}</div>
+
+          {/* Secondary content - hidden on mobile */}
+          {!isMobile && (
+            <div className="absolute top-1/2 left-[200px] h-8 -translate-y-1/2 lg:left-[250px]">
+              {Secondary}
+            </div>
+          )}
+
+          {/* Center content - adjusted for mobile */}
+          <div
+            className={classNames(
+              'absolute top-1/2 -translate-y-1/2 transform',
+              isSmallScreen ? 'left-[120px]' : 'left-1/2 -translate-x-1/2'
+            )}
+          >
+            <div className="flex items-center justify-center space-x-1 sm:space-x-2">
+              {children}
+            </div>
           </div>
+
+          {/* Right section - responsive */}
           <div className="absolute right-0 top-1/2 flex -translate-y-1/2 select-none items-center">
-            {UndoRedo}
-            <div className="border-primary-dark mx-1.5 h-[25px] border-r"></div>
-            {PatientInfo}
-            <div className="border-primary-dark mx-1.5 h-[25px] border-r"></div>
+            {/* UndoRedo - hidden on mobile */}
+            {!isMobile && UndoRedo}
+            {!isMobile && <div className="border-primary-dark mx-1.5 h-[25px] border-r"></div>}
+
+            {/* PatientInfo - hidden on mobile, compact on tablet */}
+            {!isMobile && (
+              <>
+                <div className={classNames(isTablet && 'max-w-[200px] truncate')}>
+                  {PatientInfo}
+                </div>
+                <div className="border-primary-dark mx-1.5 h-[25px] border-r"></div>
+              </>
+            )}
+
+            {/* Settings menu */}
             <div className="flex-shrink-0">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
